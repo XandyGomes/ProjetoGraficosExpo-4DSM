@@ -1,20 +1,40 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+import { PieChart } from "react-native-svg-charts";
 
 export default function App() {
+  const data = [30, 10, 25, 18, 17];
+  const pieData = data.map((value, index) => ({
+    value,
+    key: `${index}-${value}`,
+    svg: {
+      fill: "#FF0000",
+    },
+  }));
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <View>
+        <Text style={styles.textContainer}>Gráfico PieChart</Text>
+      </View>
+      <View>
+        <PieChart style={{ height: 400 }} data={pieData}>
+        
+        </PieChart> 
+      </View>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    margin: 20,
+    justifyContent: "center",
+  },
+  textContainer: {
+    fontSize: 30,
+    fontWeight: "bold",
+    color: "black",
+    textAlign: "center",
   },
 });
