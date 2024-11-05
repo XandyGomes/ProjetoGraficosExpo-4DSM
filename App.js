@@ -1,16 +1,44 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { PieChart } from "react-native-svg-charts";
+import { Text as TextSVG } from "react-native-svg";
 
 export default function App() {
-  const data = [30, 10, 25, 18, 17];
+  const data = [10, 20, 30, 40];
   const pieData = data.map((value, index) => ({
     value,
     key: `${index}-${value}`,
     svg: {
-      fill: "#FF0000",
+      fill: (
+        "#" +
+        ((Math.random() * 0xffffff) << 0).toString(16) +
+        "000000"
+      ).slice(0, 7),
     },
   }));
+
+  const Label = ({ slices }) => {
+    return slices.map((slice, index) => {
+      const { pieCentroid, data } = slice;
+      return (
+        <TextSVG
+          key={index}
+          x={pieCentroid[0]}
+          y={pieCentroid[1]}
+          fill={"white"}
+          textAnchor={"middle"}
+          alignmentBaseline={"middle"}
+          fontSize={24}
+          fontWeight={"bold"}
+          stroke={"black"}
+          strokeWidth={0.2}
+        >
+          {data.value}%
+        </TextSVG>
+      );
+    });
+  };
+
   return (
     <View style={styles.container}>
       <View>
@@ -18,11 +46,11 @@ export default function App() {
       </View>
       <View>
         <PieChart style={{ height: 400 }} data={pieData}>
-        
-        </PieChart> 
+          <Label />
+        </PieChart>
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
